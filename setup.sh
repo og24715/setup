@@ -10,3 +10,11 @@ fi
 
 # ansible
 brew install ansible
+
+# clone setup repository
+curl -OL https://github.com/og24715/setup/archive/refs/heads/main.zip
+unzip main.zip
+cd setup-main
+
+# deploy ansible
+ansible-playbook ansible/playbook.yml
