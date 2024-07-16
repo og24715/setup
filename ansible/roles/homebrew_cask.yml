@@ -1,0 +1,11 @@
+- name: install homebrew cask packages
+  community.general.homebrew_cask:
+    name:
+      - raycast
+      - docker
+      - google-chrome
+      - google-japanese-ime
+      - iterm2
+      - visual-studio-code
+      - gather
+      - slack

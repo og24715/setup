@@ -1,0 +1,10 @@
+- name: update homebrew
+    community.general.homebrew:
+    update_homebrew: true
+
+- name: install homebrew packages
+  community.general.homebrew:
+    name:
+      - bat
+      - ffmpeg
+      - gh

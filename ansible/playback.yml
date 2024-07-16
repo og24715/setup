@@ -1,0 +1,9 @@
+- name: set up
+  hosts: 127.0.0.1
+  connection: local
+  gather_facts: no
+  become: no
+
+  roles:
+    - homebrew
+    - homebrew_cask
