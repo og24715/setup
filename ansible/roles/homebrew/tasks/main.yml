@@ -1,5 +1,5 @@
 - name: update homebrew
-    community.general.homebrew:
+  community.general.homebrew:
     update_homebrew: true
 
 - name: install homebrew packages
