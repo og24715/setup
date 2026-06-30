@@ -9,3 +9,6 @@
       - visual-studio-code
       - gather
       - slack
+    # Provided when the playbook is run with --ask-become-pass, so pkg-based
+    # casks such as google-japanese-ime can install. Omitted otherwise.
+    sudo_password: "{{ ansible_become_password | default(omit) }}"
