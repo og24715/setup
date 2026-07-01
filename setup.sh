@@ -41,7 +41,6 @@ unzip -o main.zip
 cd setup-main
 
 # deploy ansible
-# --ask-become-pass prompts for the macOS password so pkg-based casks
-# (e.g. google-japanese-ime) can install; without it the cask task fails
-# on the first cask that needs sudo and every cask after it is skipped.
-ansible-playbook ansible/playbook.yml --ask-become-pass
+# The playbook prompts for the macOS password itself (vars_prompt) and uses it
+# both for sudo-requiring casks and for become tasks, so no --ask-become-pass.
+ansible-playbook ansible/playbook.yml

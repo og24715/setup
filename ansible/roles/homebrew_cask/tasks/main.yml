@@ -9,6 +9,7 @@
       - visual-studio-code
       - gather
       - slack
-    # Provided when the playbook is run with --ask-become-pass, so pkg-based
-    # casks such as google-japanese-ime can install. Omitted otherwise.
-    sudo_password: "{{ ansible_become_password | default(omit) }}"
+    # From the vars_prompt in playbook.yml. homebrew_cask sets SUDO_ASKPASS
+    # from this, which lets brew run `sudo -A` for casks that need root
+    # (docker's symlink into /usr/local/bin, the google-japanese-ime pkg, ...).
+    sudo_password: "{{ become_password }}"
