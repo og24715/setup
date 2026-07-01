@@ -35,3 +35,25 @@
       /usr/bin/hidutil property --set
       '{"UserKeyMapping":[{"HIDKeyboardModifierMappingSrc":0x700000039,"HIDKeyboardModifierMappingDst":0x7000000E0}]}'
   changed_when: true
+
+# Input source switch on Cmd+Space.
+# symbolichotkeys parameters = [char, keycode, modifier]; space keycode = 49,
+# Cmd modifier = 1048576. Free Cmd+Space by disabling Spotlight (id 64) first.
+- name: disable Spotlight's Cmd+Space (id 64)
+  ansible.builtin.command:
+    cmd: >
+      defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 64
+      '<dict><key>enabled</key><false/><key>value</key><dict><key>type</key><string>standard</string><key>parameters</key><array><integer>65535</integer><integer>49</integer><integer>1048576</integer></array></dict></dict>'
+  changed_when: true
+
+- name: set "select the previous input source" (id 60) to Cmd+Space
+  ansible.builtin.command:
+    cmd: >
+      defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 60
+      '<dict><key>enabled</key><true/><key>value</key><dict><key>type</key><string>standard</string><key>parameters</key><array><integer>32</integer><integer>49</integer><integer>1048576</integer></array></dict></dict>'
+  changed_when: true
+
+- name: reload keyboard shortcut settings
+  ansible.builtin.command:
+    cmd: /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
+  changed_when: true
