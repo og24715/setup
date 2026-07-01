@@ -1,6 +1,7 @@
 # Formulae
 brew "bat"
 brew "ffmpeg"
+brew "fish"
 brew "gh"
 
 # Casks

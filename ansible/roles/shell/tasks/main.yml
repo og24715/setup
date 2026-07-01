@@ -1,0 +1,23 @@
+# Make fish the default login shell. fish itself is installed by the homebrew
+# role, which runs before this one.
+- name: find the fish path
+  ansible.builtin.shell: command -v fish
+  register: fish_bin
+  changed_when: false
+
+- name: read the current login shell
+  ansible.builtin.command: "dscl . -read /Users/{{ lookup('env', 'USER') }} UserShell"
+  register: current_shell
+  changed_when: false
+
+- name: register fish in /etc/shells
+  become: true
+  ansible.builtin.lineinfile:
+    path: /etc/shells
+    line: "{{ fish_bin.stdout }}"
+    state: present
+
+- name: set fish as the default login shell
+  become: true
+  ansible.builtin.command: "chsh -s {{ fish_bin.stdout }} {{ lookup('env', 'USER') }}"
+  when: fish_bin.stdout not in current_shell.stdout
