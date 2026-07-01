@@ -4,17 +4,7 @@
   gather_facts: no
   become: no
 
-  # Prompt for the macOS password as a normal variable. Unlike
-  # --ask-become-pass, a vars_prompt value can be referenced in templates,
-  # which is required to hand it to homebrew_cask's sudo_password below.
-  vars_prompt:
-    - name: become_password
-      prompt: "macOS login password (needed for casks/steps that use sudo)"
-      private: true
-
-  vars:
-    ansible_become_password: "{{ become_password }}"
-
-  roles:
-    - homebrew
-    - homebrew_cask
+  # Package installs (formulae + casks) are handled by the Brewfile via
+  # `brew bundle` in setup.sh. Ansible is only for system configuration.
+  # Configuration roles (keyboard, shell, ...) are registered here.
+  roles: []
