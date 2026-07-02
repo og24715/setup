@@ -8,3 +8,4 @@
   # `brew bundle` in setup.sh. Ansible is only for system configuration.
   roles:
     - keyboard
+    - shell
