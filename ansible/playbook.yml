@@ -6,5 +6,5 @@
 
   # Package installs (formulae + casks) are handled by the Brewfile via
   # `brew bundle` in setup.sh. Ansible is only for system configuration.
-  # Configuration roles (keyboard, shell, ...) are registered here.
-  roles: []
+  roles:
+    - keyboard

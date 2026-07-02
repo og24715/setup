@@ -1,0 +1,59 @@
+- name: ensure LaunchAgents directory exists
+  ansible.builtin.file:
+    path: "{{ lookup('env', 'HOME') }}/Library/LaunchAgents"
+    state: directory
+    mode: "0755"
+
+- name: install CapsLock -> Control LaunchAgent
+  ansible.builtin.copy:
+    dest: "{{ lookup('env', 'HOME') }}/Library/LaunchAgents/com.local.keyremap.plist"
+    mode: "0644"
+    # hidutil mappings do not survive a reboot, so re-apply them at every login.
+    # 0x700000039 = Caps Lock, 0x7000000E0 = Left Control.
+    content: |
+      <?xml version="1.0" encoding="UTF-8"?>
+      <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+      <plist version="1.0">
+      <dict>
+        <key>Label</key>
+        <string>com.local.keyremap</string>
+        <key>ProgramArguments</key>
+        <array>
+          <string>/usr/bin/hidutil</string>
+          <string>property</string>
+          <string>--set</string>
+          <string>{"UserKeyMapping":[{"HIDKeyboardModifierMappingSrc":0x700000039,"HIDKeyboardModifierMappingDst":0x7000000E0}]}</string>
+        </array>
+        <key>RunAtLoad</key>
+        <true/>
+      </dict>
+      </plist>
+
+- name: apply the remapping immediately
+  ansible.builtin.command:
+    cmd: >
+      /usr/bin/hidutil property --set
+      '{"UserKeyMapping":[{"HIDKeyboardModifierMappingSrc":0x700000039,"HIDKeyboardModifierMappingDst":0x7000000E0}]}'
+  changed_when: true
+
+# Input source switch on Cmd+Space.
+# symbolichotkeys parameters = [char, keycode, modifier]; space keycode = 49,
+# Cmd modifier = 1048576. Free Cmd+Space by disabling Spotlight (id 64) first.
+- name: disable Spotlight's Cmd+Space (id 64)
+  ansible.builtin.command:
+    cmd: >
+      defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 64
+      '<dict><key>enabled</key><false/><key>value</key><dict><key>type</key><string>standard</string><key>parameters</key><array><integer>65535</integer><integer>49</integer><integer>1048576</integer></array></dict></dict>'
+  changed_when: true
+
+- name: set "select the previous input source" (id 60) to Cmd+Space
+  ansible.builtin.command:
+    cmd: >
+      defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 60
+      '<dict><key>enabled</key><true/><key>value</key><dict><key>type</key><string>standard</string><key>parameters</key><array><integer>32</integer><integer>49</integer><integer>1048576</integer></array></dict></dict>'
+  changed_when: true
+
+- name: reload keyboard shortcut settings
+  ansible.builtin.command:
+    cmd: /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
+  changed_when: true
