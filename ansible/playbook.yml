@@ -4,6 +4,7 @@
   gather_facts: no
   become: no
 
-  roles:
-    - homebrew
-    - homebrew_cask
+  # Package installs (formulae + casks) are handled by the Brewfile via
+  # `brew bundle` in setup.sh. Ansible is only for system configuration.
+  # Configuration roles (keyboard, shell, ...) are registered here.
+  roles: []
