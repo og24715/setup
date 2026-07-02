@@ -1,0 +1,24 @@
+# パステルで可愛い定番テーマ
+theme = Catppuccin Mocha
+
+# 余白たっぷり（好み）
+window-padding-x = 16
+window-padding-y = 16
+window-padding-balance = true
+
+# フォント少し大きめ
+font-size = 14
+
+# やわらかい透け感＋ぼかし
+background-opacity = 0.92
+background-blur = true
+
+# カーソル
+cursor-style = bar
+cursor-style-blink = true
+
+# タイトルバーすっきり＆タブ表示
+macos-titlebar-style = tabs
+
+# 入力中はカーソルを隠す
+mouse-hide-while-typing = true
