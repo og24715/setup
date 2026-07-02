@@ -1,6 +1,7 @@
 # Formulae
 brew "bat"
 brew "ffmpeg"
+brew "git-delta"
 brew "fish"
 brew "gh"
 brew "starship"
