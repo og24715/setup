@@ -7,6 +7,7 @@ brew "starship"
 
 # Casks
 cask "raycast"
+cask "ghostty"
 cask "charles"
 cask "docker"
 cask "google-chrome"
