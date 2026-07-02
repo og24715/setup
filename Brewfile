@@ -3,6 +3,7 @@ brew "bat"
 brew "ffmpeg"
 brew "fish"
 brew "gh"
+brew "starship"
 
 # Casks
 cask "raycast"

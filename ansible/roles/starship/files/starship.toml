@@ -1,0 +1,15 @@
+# コマンドごとに上に空行を1行入れて区切る
+add_newline = true
+
+# 情報行 → (空行) → 入力行。format 冒頭の空行でコマンド間の余白を「大胆に」広げる
+format = """
+
+$directory $git_branch $git_status $cmd_duration
+$character """
+
+[directory]
+style = "bold cyan"
+
+[character]
+success_symbol = "[❯](bold green)"
+error_symbol = "[❯](bold red)"
