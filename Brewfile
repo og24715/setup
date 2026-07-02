@@ -6,6 +6,7 @@ brew "gh"
 
 # Casks
 cask "raycast"
+cask "charles"
 cask "docker"
 cask "google-chrome"
 cask "google-japanese-ime"
