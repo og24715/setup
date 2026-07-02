@@ -1,0 +1,16 @@
+# git-delta as git's diff pager. The `delta` binary is installed via the
+# Brewfile. Only delta-related keys are set, so user name/email are untouched.
+- name: configure git to use delta
+  community.general.git_config:
+    name: "{{ item.name }}"
+    scope: global
+    value: "{{ item.value }}"
+  loop:
+    - { name: "core.pager", value: "delta" }
+    - { name: "interactive.diffFilter", value: "delta --color-only" }
+    - { name: "delta.navigate", value: "true" }
+    - { name: "delta.line-numbers", value: "true" }
+    - { name: "delta.side-by-side", value: "false" }
+    - { name: "delta.syntax-theme", value: "Catppuccin Mocha" }
+    - { name: "merge.conflictStyle", value: "zdiff3" }
+    - { name: "diff.colorMoved", value: "default" }
