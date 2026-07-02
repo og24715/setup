@@ -1,0 +1,25 @@
+# Node.js via Volta. The `volta` binary is installed via the Brewfile.
+- name: configure Volta in fish
+  ansible.builtin.blockinfile:
+    path: "{{ lookup('env', 'HOME') }}/.config/fish/config.fish"
+    create: true
+    mode: "0644"
+    marker: "# {mark} VOLTA"
+    block: |
+      set -gx VOLTA_HOME "$HOME/.volta"
+      fish_add_path "$VOLTA_HOME/bin"
+
+- name: check whether Node is already installed via Volta
+  ansible.builtin.command: volta list node
+  environment:
+    VOLTA_HOME: "{{ lookup('env', 'HOME') }}/.volta"
+  register: volta_node
+  changed_when: false
+  failed_when: false
+
+- name: install the default Node.js via Volta
+  ansible.builtin.command: volta install node
+  environment:
+    VOLTA_HOME: "{{ lookup('env', 'HOME') }}/.volta"
+  when: "'runtime node' not in volta_node.stdout"
+  changed_when: true

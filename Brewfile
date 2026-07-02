@@ -4,6 +4,7 @@ brew "ffmpeg"
 brew "fish"
 brew "gh"
 brew "starship"
+brew "volta"
 
 # Casks
 cask "raycast"
