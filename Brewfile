@@ -17,3 +17,6 @@ cask "google-japanese-ime"
 cask "visual-studio-code"
 cask "gather"
 cask "slack"
+
+# Fonts
+cask "font-sf-mono"

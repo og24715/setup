@@ -6,7 +6,8 @@ window-padding-x = 16
 window-padding-y = 16
 window-padding-balance = true
 
-# フォント少し大きめ
+# フォント（前に Terminal.app で使ってた SF Mono）
+font-family = "SF Mono"
 font-size = 14
 
 # やわらかい透け感＋ぼかし
